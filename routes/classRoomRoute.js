@@ -29,9 +29,33 @@ router.post(
   createClassRoomValidator,
   createClassRoom
 );
-router.get("/", createFilterObject, getAllClassRooms);
-router.get("/:id", getSpecificClassRoomValidator, getSpecificClassRoom);
-router.put("/:id", updateSpecificClassRoomValidator, updateSpecificClassRoom);
-router.delete("/:id", deleteSpecificClassRoomValidator, deleteSpecificSchool);
+router.get(
+  "/",
+  authServices.protect,
+  authServices.allowTo("superAdmin", "admin"),
+  createFilterObject,
+  getAllClassRooms
+);
+router.get(
+  "/:id",
+  authServices.protect,
+  authServices.allowTo("superAdmin", "admin"),
+  getSpecificClassRoomValidator,
+  getSpecificClassRoom
+);
+router.put(
+  "/:id",
+  authServices.protect,
+  authServices.allowTo("admin"),
+  updateSpecificClassRoomValidator,
+  updateSpecificClassRoom
+);
+router.delete(
+  "/:id",
+  authServices.protect,
+  authServices.allowTo("admin"),
+  deleteSpecificClassRoomValidator,
+  deleteSpecificSchool
+);
 
 module.exports = router;

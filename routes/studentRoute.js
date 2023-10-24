@@ -25,8 +25,20 @@ router.post(
   createStudentValidator,
   createStudent
 );
-router.get("/", createFilterObject, getAllStudents);
-router.get("/:id", getSpecificStudentValidator, getSpecificStudent);
+router.get(
+  "/",
+  authServices.protect,
+  authServices.allowTo("superAdmin", "admin"),
+  createFilterObject,
+  getAllStudents
+);
+router.get(
+  "/:id",
+  authServices.protect,
+  authServices.allowTo("superAdmin", "admin"),
+  getSpecificStudentValidator,
+  getSpecificStudent
+);
 router.put(
   "/:id",
   authServices.protect,

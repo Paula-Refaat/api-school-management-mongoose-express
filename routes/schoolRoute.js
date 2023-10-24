@@ -27,8 +27,19 @@ router.post(
   createSchoolValidator,
   createSchool
 );
-router.get("/", getAllSchools);
-router.get("/:id", getSpecificSchoolValidator, getSpecificSchool);
+router.get(
+  "/",
+  authServices.protect,
+  authServices.allowTo("superAdmin", "admin"),
+  getAllSchools
+);
+router.get(
+  "/:id",
+  authServices.protect,
+  authServices.allowTo("superAdmin", "admin"),
+  getSpecificSchoolValidator,
+  getSpecificSchool
+);
 router.put(
   "/:id",
   authServices.protect,
